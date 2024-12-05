@@ -11,18 +11,17 @@ def process_video(input_video_path):
     # Generate output paths
     video_name = os.path.splitext(os.path.basename(input_video_path))[0]
     faces_output_dir = os.path.join(CROPPED_FACES_DIR, video_name)
-    processed_video_path = os.path.join(PROCESSED_VIDEO_DIR, 
-                                      f"{video_name}_processed.mp4")
+    aligned_faces_dir = os.path.join(PROCESSED_VIDEO_DIR, f"{video_name}_aligned")
 
     # Stage 1: Detect and save faces
     detector = FaceDetector()
     detector.detect_and_save_faces(input_video_path, faces_output_dir)
 
-    # Stage 2: Align and process faces
+    # Stage 2: Align and save faces as images
     aligner = FaceAligner()
     aligner.align_faces_and_save(
         faces_output_dir,
-        processed_video_path,
+        aligned_faces_dir,
         video_props['width'],
         video_props['height'],
         video_props['fps']
